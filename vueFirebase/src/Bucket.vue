@@ -51,20 +51,34 @@ export default {
   },
   methods: {
     totalrate() {
-      for (let i = 0; i < 1; i++) {
-        this.rate = this.rate *this.total[this.total.length-1]
-        this.k++;
-        console.log(this.total.length)
+      console.log(this.rate+'1')
+      if(this.insert){
+     this.rate = this.rate * this.total[this.total.length-1]
       }
+      else{
+        return this.rate
+      }
+      
+      
       this.rate = this.rate.toFixed(2);
-    }
+       console.log(this.total.length+'2')
+    }/*
+    totalrate(){
+      if(this.total.length>this.ratelength){
+        return this.rate
+      }
+      else{
+        this.rate = this.rate * this.total[ratelength]
+      }
+    }*/
   },
 
-  props: ["name", "total"],
-  watch: {
+  props: ["name", "total","insert"],
+  watch:{ 
     total() {
       return this.totalrate();
-    }
+    
+  }
   }
 };
 </script>

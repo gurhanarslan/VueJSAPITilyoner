@@ -1,5 +1,12 @@
 <template>
+
   <div class="container">
+     <div class="loading" :class="isLoading">
+      <div class="lds-ripple">
+        <div></div>
+        <div></div>
+      </div>
+    </div>
     <table class="table table-striped text-center ">
       <thead class="bg-success">
         <tr>
@@ -41,19 +48,44 @@ export default {
       users:[],
       rate:[],
       buckets:[],
-      show:true
+      show:true,
+      loading:true,
+      insert:false
     }
   },
-  
+  computed:{
+      isLoading(){
+      if(this.users.length==0){
+        return 'd-block'
+      }
+      else{
+        return 'd-none'
+      }
+    }
+  },
   methods:{
+  
       choosing(value,g){
           let match = this.users[value]
           let teams = match.en
           let rate = match.m[0].o[g].odd
            let rate2 = match.m[0].o[g].odd
+          
           let guess = match.m[0].o[g].ona
-         
-    for (let i = 0; i < this.buckets.length; i++) {
+    
+ let same = this.buckets.filter(response =>{
+          if(response.teams==teams){
+            return true
+          }
+          else{
+           return false
+          }
+        })
+      
+
+        
+
+   /* for (let i = 0; i < this.buckets.length; i++) {
       let same= this.buckets[i].teams.includes(teams);
       console.log(same)
      if(same)
@@ -67,13 +99,27 @@ export default {
       else{
           
       }
-    }
+    }*/
         this.buckets.push({teams:teams,rate:rate,guess:guess})
-       this.rate.push(rate2)
+            this.rate.push(rate2)
+            this.insert=true
+         let length = this.buckets.length
+       if(same.length>0){
+          alert('Bu maçı daha önce eklemiştiniz!')
+            this.buckets.pop();
+            this.rate.pop();
+            this.insert=false
+        
+        }
+           
+            
+   
       console.log(rate)
      this.$emit("rate-section",this.rate)
-        console.log(this.rate)
-          console.log(this.buckets)
+this.$emit("insert",this.insert)
+     this.$emit("rate-length",this.rate.length)
+
+console.log(this.rate)
         this.$emit("matches-section",this.buckets)
 
       },

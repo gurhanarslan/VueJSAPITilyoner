@@ -1,8 +1,8 @@
 <template>
   <div class="container-fluid">
-  <div class="text-center">  {{date}}  {{rate}}</div> <hr>
-    <appIddaa @rate-section="rate=$event" @matches-section="matches=$event"></appIddaa>
-    <bucket :total="rate" :name="matches"></bucket>
+  <div class="text-center"> <h3> {{date}} -- {{ratelength}} {{insert}}</h3>  </div> <hr>
+    <appIddaa @insert="insert=$event" @rate-length="ratelength=$event" @rate-section="rate=$event" @matches-section="matches=$event"></appIddaa>
+    <bucket :insert="insert" :ratelength="ratelength" :total="rate" :name="matches"></bucket>
   </div>
 </template>
 
@@ -21,7 +21,9 @@ export default {
    return{
      page:"appIddaa",
      matches:[],
-     rate:[]
+     insert:null,
+     rate:[],
+     ratelength:null
 
    }
 
